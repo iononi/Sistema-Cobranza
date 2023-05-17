@@ -14,18 +14,18 @@ public class Categoria implements Serializable {
     private long categoriaID;
 
     @Column(name = "Categoria", length = 50, nullable = false)
-    private String categoia;
+    private String categoria;
 
     public Categoria () {
     }
 
     public Categoria (long categoriaID, String categoia) {
         this.categoriaID = categoriaID;
-        this.categoia = categoia;
+        this.categoria = categoia;
     }
 
-    public Categoria (String categoia) {
-        this.categoia = categoia;
+    public Categoria (String categoria) {
+        this.categoria = categoria;
     }
 
     public long getCategoriaID () {
@@ -36,11 +36,11 @@ public class Categoria implements Serializable {
         this.categoriaID = categoriaID;
     }
 
-    public String getCategoia () {
-        return categoia;
+    public String getCategoria () {
+        return categoria;
     }
 
-    public void setCategoia (String categoia) {
-        this.categoia = categoia;
+    public void setCategoria (String categoria) {
+        this.categoria = categoria;
     }
 }
