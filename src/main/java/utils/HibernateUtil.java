@@ -1,3 +1,5 @@
+package utils;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -21,13 +23,16 @@ public class HibernateUtil {
                 .buildSessionFactory ();
     }
 
+    public static void closeSessionFactory () {
+        getSessionFactory ().close ();
+    }
+
     // Singleton design pattern to ensure only one SessionFactory object
     public static SessionFactory getSessionFactory () {
         if (sessionFactory == null) {
             // apply xml configuration and start the sessionFactory
-            try (StandardServiceRegistry registry = buildServiceRegistryBuilder ()) {
-                sessionFactory = buildSessionFactory (registry);
-            }
+            StandardServiceRegistry registry = buildServiceRegistryBuilder ();
+            sessionFactory = buildSessionFactory (registry);
         }
 
         return sessionFactory;
