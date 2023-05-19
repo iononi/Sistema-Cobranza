@@ -43,4 +43,12 @@ public class Categoria implements Serializable {
     public void setCategoria (String categoria) {
         this.categoria = categoria;
     }
+
+    @Override
+    public String toString () {
+        return "Categoria (" +
+                "categoriaID=" + categoriaID +
+                ", categoria='" + categoria + '\'' +
+                ')';
+    }
 }
