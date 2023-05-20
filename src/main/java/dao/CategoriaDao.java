@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.hibernate.service.UnknownServiceException;
 import utils.HibernateUtil;
+
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
@@ -44,7 +46,7 @@ public class CategoriaDao implements Crud<Categoria> {
     }
 
     @Override
-    public Categoria getById (long id) {
+    public Optional<Categoria> getById (long id) {
 
         Session session = sessionFactory.openSession ();
 
@@ -58,16 +60,16 @@ public class CategoriaDao implements Crud<Categoria> {
         } finally {
             session.close ();
         }
-        return category;
+        return Optional.ofNullable (category);
     }
 
     @Override
-    public Categoria get (Categoria entity) {
+    public Optional<Categoria> get (Categoria entity) {
         Categoria c;
         try (Session session = HibernateUtil.getSessionFactory ().openSession ()) {
             c = session.get (Categoria.class, entity);
         }
-        return c;
+        return Optional.ofNullable (c);
     }
 
     @Override
