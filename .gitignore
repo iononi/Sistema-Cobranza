@@ -39,3 +39,6 @@ build/
 
 ### Hibernate configuration files ###
 hibernate.*
+
+### Java SWING forms
+*.form
