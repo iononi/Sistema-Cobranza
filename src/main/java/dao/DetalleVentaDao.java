@@ -1,14 +1,10 @@
 package dao;
 
-import models.Categoria;
 import models.DetalleVenta;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.hibernate.service.UnknownServiceException;
-import utils.HibernateUtil;
 
 import java.util.List;
 import java.util.Optional;
