@@ -1,11 +1,12 @@
 package dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Crud<T> {
     boolean insert (T entity); // create
-    T getById (long id); // read
-    T get (T entity); // read
+    Optional<T> getById (long id); // read
+    Optional<T> get (T entity); // read
 
     List<T> getAll (); // read
 
