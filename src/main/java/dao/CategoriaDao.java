@@ -73,20 +73,14 @@ public class CategoriaDao implements Crud<Categoria> {
     @Override
     public List<Categoria> getAll () {
 
-        Transaction transaction = null;
         List<Categoria> categoryList = null;
         try (Session session = sessionFactory.openSession ()) {
-
-            transaction = session.beginTransaction ();
 
             Query<Categoria> query = session.createQuery ("from models.Categoria", Categoria.class);
 
             categoryList = query.list ();
 
         } catch (HibernateException ex) {
-            if (transaction != null) {
-                transaction.rollback ();
-            }
             Logger.getLogger (CategoriaDao.class.getName ()).log (Level.SEVERE, ex.getMessage(), ex);
         }
 
