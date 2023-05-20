@@ -25,6 +25,7 @@ public class CategoriaDao implements Crud<Categoria> {
     @Override
     public boolean insert (Categoria entity) {
 
+        boolean isInserted = false;
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession ()) {
@@ -35,30 +36,27 @@ public class CategoriaDao implements Crud<Categoria> {
 
             transaction.commit ();
 
+            isInserted = true;
+
         } catch (UnknownServiceException ex) {
             if (transaction != null) {
                 transaction.rollback ();
             }
             Logger.getLogger(CategoriaDao.class.getName ()).log(Level.SEVERE, ex.getMessage (), ex);
-            return false;
         }
-        return true;
+        return isInserted;
     }
 
     @Override
     public Optional<Categoria> getById (long id) {
 
-        Session session = sessionFactory.openSession ();
-
         Categoria category = new Categoria ();
 
-        try {
+        try (Session session = sessionFactory.openSession ()) {
             category = session.get (Categoria.class, id);
 
         } catch (UnknownServiceException ex) {
             Logger.getLogger (CategoriaDao.class.getName ()).log (Level.SEVERE, ex.getMessage (), ex);
-        } finally {
-            session.close ();
         }
         return Optional.ofNullable (category);
     }
@@ -66,7 +64,7 @@ public class CategoriaDao implements Crud<Categoria> {
     @Override
     public Optional<Categoria> get (Categoria entity) {
         Categoria c;
-        try (Session session = HibernateUtil.getSessionFactory ().openSession ()) {
+        try (Session session = sessionFactory.openSession ()) {
             c = session.get (Categoria.class, entity);
         }
         return Optional.ofNullable (c);
@@ -75,11 +73,9 @@ public class CategoriaDao implements Crud<Categoria> {
     @Override
     public List<Categoria> getAll () {
 
-        Session session = sessionFactory.openSession ();
-
         Transaction transaction = null;
         List<Categoria> categoryList = null;
-        try {
+        try (Session session = sessionFactory.openSession ()) {
 
             transaction = session.beginTransaction ();
 
@@ -87,13 +83,11 @@ public class CategoriaDao implements Crud<Categoria> {
 
             categoryList = query.list ();
 
-        } catch (UnknownServiceException ex) {
+        } catch (HibernateException ex) {
             if (transaction != null) {
                 transaction.rollback ();
             }
             Logger.getLogger (CategoriaDao.class.getName ()).log (Level.SEVERE, ex.getMessage(), ex);
-        } finally {
-            session.close ();
         }
 
         return categoryList;
@@ -105,9 +99,7 @@ public class CategoriaDao implements Crud<Categoria> {
         boolean isUpdated = false;
         Transaction transaction = null;
 
-        try {
-
-            Session session = sessionFactory.openSession ();
+        try (Session session = sessionFactory.openSession () ) {
 
             transaction = session.beginTransaction ();
 
@@ -135,12 +127,9 @@ public class CategoriaDao implements Crud<Categoria> {
     public boolean delete (Categoria entity) {
 
         boolean isDeleted = false;
-        Session session = null;
         Transaction transaction = null;
 
-        try {
-
-            session = sessionFactory.openSession ();
+        try (Session session = sessionFactory.openSession ()) {
 
             transaction = session.beginTransaction ();
 
@@ -156,9 +145,6 @@ public class CategoriaDao implements Crud<Categoria> {
                 transaction.rollback ();
             }
             Logger.getLogger (CategoriaDao.class.getName ()).log (Level.SEVERE, ex.getMessage (), ex);
-        } finally {
-            if (session != null)
-                session.close ();
         }
         return isDeleted;
     }
