@@ -1,18 +1,18 @@
 package dao;
 
 import models.Categoria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.hibernate.service.UnknownServiceException;
-import utils.HibernateUtil;
 
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 
 public class CategoriaDao implements Crud<Categoria> {
 
@@ -38,7 +38,7 @@ public class CategoriaDao implements Crud<Categoria> {
 
             isInserted = true;
 
-        } catch (UnknownServiceException ex) {
+        } catch (HibernateException ex) {
             if (transaction != null) {
                 transaction.rollback ();
             }
@@ -55,7 +55,7 @@ public class CategoriaDao implements Crud<Categoria> {
         try (Session session = sessionFactory.openSession ()) {
             category = session.get (Categoria.class, id);
 
-        } catch (UnknownServiceException ex) {
+        } catch (HibernateException ex) {
             Logger.getLogger (CategoriaDao.class.getName ()).log (Level.SEVERE, ex.getMessage (), ex);
         }
         return Optional.ofNullable (category);
