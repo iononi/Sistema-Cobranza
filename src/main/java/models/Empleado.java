@@ -28,6 +28,9 @@ public class Empleado implements Serializable {
     @Column (name = "RFC", nullable = false, unique = true)
     private String rfc;
 
+    @Column (name = "contrasenia", nullable = false)
+    private int contrasenia;
+
     @Column (name = "Salario", nullable = false)
     private double salario;
 
@@ -105,6 +108,14 @@ public class Empleado implements Serializable {
 
     public void setRfc (String rfc) {
         this.rfc = rfc;
+    }
+
+    public int getContrasenia () {
+        return this.contrasenia;
+    }
+
+    public void setContrasenia (String password) {
+        this.contrasenia = password.hashCode ();
     }
 
     public double getSalario () {
